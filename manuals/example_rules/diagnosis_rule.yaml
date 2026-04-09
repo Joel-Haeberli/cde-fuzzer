@@ -1,0 +1,4 @@
+name: "diagnosis_similarity"
+type: "similarity"
+target: "diabetes mellitus"
+threshold: 0.85

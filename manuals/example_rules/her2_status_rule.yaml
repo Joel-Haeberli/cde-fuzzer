@@ -1,0 +1,4 @@
+name: "her2_status_extractor"
+type: "regex"
+pattern: "\\bHER2:\\s*(?:positiv|negativ|Score\\s*[0-3]|Grenzwertig|\\d+)\\b"
+accuracy: 0.90

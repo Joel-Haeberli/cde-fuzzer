@@ -1,0 +1,4 @@
+name: "llm_age_extractor"
+type: "llm"
+prompt: "Extract the patient's age from the text. If no age information is present, respond with 'no data'."
+accuracy: 0.90

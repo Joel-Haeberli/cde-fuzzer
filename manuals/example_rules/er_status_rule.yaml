@@ -1,0 +1,4 @@
+name: "er_status_extractor"
+type: "regex"
+pattern: '\bER\s*\([^)]*\):\s*(?:positiv|negativ|"Low"|"low")\b'
+accuracy: 0.90

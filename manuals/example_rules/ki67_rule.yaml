@@ -1,0 +1,4 @@
+name: "ki67_extractor"
+type: "regex"
+pattern: "\\bKi-67:\\s*(?:\\d+-\\d+%?|\\d+%?|\\d+\\.\\d+%?)\\b"
+accuracy: 0.90

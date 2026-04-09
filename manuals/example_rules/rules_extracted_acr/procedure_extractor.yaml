@@ -1,0 +1,4 @@
+name: "procedure_extractor"
+type: "regex"
+pattern: "(CT|MRI|US|Radiography|PET/CT|FDG-PET/CT|Bone scan|MRA|MRV|Fluoroscopy).+"
+accuracy: 0.95

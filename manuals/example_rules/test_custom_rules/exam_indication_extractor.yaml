@@ -1,0 +1,4 @@
+name: "exam_indication_extractor"
+type: "regex"
+pattern: "(follow-up|initial|routine|emergency|urgent)"
+accuracy: 0.80

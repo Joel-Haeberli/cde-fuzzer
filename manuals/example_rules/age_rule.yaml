@@ -1,0 +1,4 @@
+name: "age_extractor"
+type: "regex"
+pattern: "\\b(\\d{1,3})\\s*(?:Jahre?|Jahr|yo|years?|months?|mos?|days?|dys?|Monate?|Tage?|Jahren?)\\b"
+accuracy: 0.95

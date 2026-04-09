@@ -1,0 +1,4 @@
+name: "histology_extractor"
+type: "regex"
+pattern: "\\b(?:invasives\\s*Karzinom\\s*(?:NST|kein\\s*spezieller\\s*Typ)|duktales\\s*Carcinoma\\s*in\\s*situ|DCIS|lobuläres\\s*Karzinom|muzinöses\\s*Karzinom|papilläres\\s*Karzinom)\\b"
+accuracy: 0.85

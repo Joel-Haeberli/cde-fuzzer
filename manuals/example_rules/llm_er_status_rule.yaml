@@ -1,0 +1,4 @@
+name: "llm_er_status_extractor"
+type: "llm"
+prompt: "Extract the ER (estrogen receptor) status from the text. Look for terms like 'ER positive', 'ER negative', 'ER+', 'ER-', etc. If no ER status information is present, respond with 'no data'."
+accuracy: 0.88

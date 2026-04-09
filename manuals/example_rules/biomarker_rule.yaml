@@ -1,0 +1,4 @@
+name: "biomarker_extractor"
+type: "regex"
+pattern: "\\b(?:ER|PR|HER2|Ki-67|Ki67)\\s*(?:positiv|negativ|Score\\s*\\d+|\\d+-\\d+%?|\\d+%?)\\b"
+accuracy: 0.85

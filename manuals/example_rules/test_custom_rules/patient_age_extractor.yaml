@@ -1,0 +1,4 @@
+name: "patient_age_extractor"
+type: "regex"
+pattern: "([0-9]{1,3}) years? old"
+accuracy: 0.90

@@ -1,0 +1,4 @@
+name: "b_klassification_extractor"
+type: "regex"
+pattern: "\\bB-[1-5](?:a|b|c)?\\b"
+accuracy: 0.95

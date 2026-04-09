@@ -1,0 +1,4 @@
+name: "clock_position_extractor"
+type: "regex"
+pattern: "\\b(?:\\d{1,2})\\s*(?:Uhr|h)\\b"
+accuracy: 0.95

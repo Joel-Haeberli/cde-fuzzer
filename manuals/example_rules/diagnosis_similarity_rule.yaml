@@ -1,0 +1,4 @@
+name: "diagnosis_similarity_extractor"
+type: "similarity"
+target: "invasives Karzinom"
+threshold: 0.85

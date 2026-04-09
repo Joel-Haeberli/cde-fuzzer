@@ -1,0 +1,32 @@
+RADIOLOGY REPORT
+=================
+
+CLINICAL INFORMATION:
+{{if .Data.scenario_description_extractor}}
+Scenario: {{.Data.scenario_description_extractor}}
+{{end}}
+
+PROCEDURES PERFORMED:
+{{if .Data.procedure_extractor}}
+- {{.Data.procedure_extractor}}
+{{end}}
+
+TECHNICAL DETAILS:
+{{if .Data.radiation_dose_extractor}}
+Radiation Dose: {{.Data.radiation_dose_extractor}}
+{{end}}
+
+FINDINGS:
+{{if .Data.body_part_extractor}}
+Body Part Examined: {{.Data.body_part_extractor}}
+{{end}}
+
+RECOMMENDATIONS:
+{{if .Data.appropriateness_extractor}}
+Appropriateness: {{.Data.appropriateness_extractor}}
+{{end}}
+
+EXTRACTED DATA SUMMARY:
+{{range $name, $value := .Data}}
+- {{$name}}: {{$value}}
+{{end}}

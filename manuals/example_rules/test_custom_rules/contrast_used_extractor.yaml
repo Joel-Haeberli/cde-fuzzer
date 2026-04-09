@@ -1,0 +1,4 @@
+name: "contrast_used_extractor"
+type: "regex"
+pattern: "(with IV contrast|without IV contrast|with and without IV contrast)"
+accuracy: 0.85

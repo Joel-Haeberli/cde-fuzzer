@@ -1,0 +1,238 @@
+name: Release Binaries
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on version tags like v1.0.0
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Build binaries
+      run: |
+        mkdir -p bin
+        # Build Linux binaries
+        GOOS=linux GOARCH=amd64 go build -o bin/cde-extractor-linux ./cmd/cli/
+        GOOS=linux GOARCH=amd64 go build -o bin/cde-extractor-server-linux ./cmd/server/
+        GOOS=linux GOARCH=amd64 go build -o bin/generate-report ./cmd/generate_report/
+        GOOS=linux GOARCH=amd64 go build -o bin/generate-diverse-report ./cmd/generate_diverse_report/
+        GOOS=linux GOARCH=amd64 go build -o bin/derive-rules ./cmd/derive_rules/
+        GOOS=linux GOARCH=amd64 go build -o bin/generate-synthetic ./cmd/generate_synthetic/
+        
+        # Build macOS binaries
+        GOOS=darwin GOARCH=amd64 go build -o bin/cde-extractor-mac ./cmd/cli/
+        GOOS=darwin GOARCH=amd64 go build -o bin/cde-extractor-server-mac ./cmd/server/
+        GOOS=darwin GOARCH=amd64 go build -o bin/generate-report-mac ./cmd/generate_report/
+        GOOS=darwin GOARCH=amd64 go build -o bin/generate-diverse-report-mac ./cmd/generate_diverse_report/
+        GOOS=darwin GOARCH=amd64 go build -o bin/derive-rules-mac ./cmd/derive_rules/
+        GOOS=darwin GOARCH=amd64 go build -o bin/generate-synthetic-mac ./cmd/generate_synthetic/
+        
+        # Build Windows binaries
+        GOOS=windows GOARCH=amd64 go build -o bin/cde-extractor-windows.exe ./cmd/cli/
+        GOOS=windows GOARCH=amd64 go build -o bin/cde-extractor-server-windows.exe ./cmd/server/
+        GOOS=windows GOARCH=amd64 go build -o bin/generate-report-windows.exe ./cmd/generate_report/
+        GOOS=windows GOARCH=amd64 go build -o bin/generate-diverse-report-windows.exe ./cmd/generate_diverse_report/
+        GOOS=windows GOARCH=amd64 go build -o bin/derive-rules-windows.exe ./cmd/derive_rules/
+        GOOS=windows GOARCH=amd64 go build -o bin/generate-synthetic-windows.exe ./cmd/generate_synthetic/
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Linux binaries
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-linux
+        asset_name: cde-extractor-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux server binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-server-linux
+        asset_name: cde-extractor-server-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux generate-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-report
+        asset_name: generate-report-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux generate-diverse-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-diverse-report
+        asset_name: generate-diverse-report-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux derive-rules binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/derive-rules
+        asset_name: derive-rules-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux generate-synthetic binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-synthetic
+        asset_name: generate-synthetic-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS binaries
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-mac
+        asset_name: cde-extractor-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS server binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-server-mac
+        asset_name: cde-extractor-server-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS generate-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-report-mac
+        asset_name: generate-report-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS generate-diverse-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-diverse-report-mac
+        asset_name: generate-diverse-report-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS derive-rules binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/derive-rules-mac
+        asset_name: derive-rules-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS generate-synthetic binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-synthetic-mac
+        asset_name: generate-synthetic-mac
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows binaries
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-windows.exe
+        asset_name: cde-extractor-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows server binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/cde-extractor-server-windows.exe
+        asset_name: cde-extractor-server-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows generate-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-report-windows.exe
+        asset_name: generate-report-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows generate-diverse-report binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-diverse-report-windows.exe
+        asset_name: generate-diverse-report-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows derive-rules binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/derive-rules-windows.exe
+        asset_name: derive-rules-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows generate-synthetic binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/generate-synthetic-windows.exe
+        asset_name: generate-synthetic-windows.exe
+        asset_content_type: application/octet-stream

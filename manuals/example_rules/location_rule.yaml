@@ -1,0 +1,4 @@
+name: "location_extractor"
+type: "regex"
+pattern: "\\b(?:rechts|links|Rechts|Links|Mamma\\s*(?:rechts|links)|oberer\\s*(?:äusserer|innerer)?\\s*Quadrant|unterer\\s*(?:äusserer|innerer)?\\s*Quadrant|Zentral|Mamille)\\b"
+accuracy: 0.90

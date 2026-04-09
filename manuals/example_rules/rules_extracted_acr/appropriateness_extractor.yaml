@@ -1,0 +1,4 @@
+name: "appropriateness_extractor"
+type: "regex"
+pattern: "Usually appropriate|May be appropriate|Usually not appropriate"
+accuracy: 0.95

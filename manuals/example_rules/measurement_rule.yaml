@@ -1,0 +1,4 @@
+name: "measurement_extractor"
+type: "regex"
+pattern: "\\b(?:\\d+\\s*(?:mm|cm|ml|mg|g|kg)|\\d+\\.\\d+\\s*(?:mm|cm|ml|mg|g|kg)|\\d+\\s*x\\s*\\d+\\s*(?:mm|cm)?)\\b"
+accuracy: 0.85

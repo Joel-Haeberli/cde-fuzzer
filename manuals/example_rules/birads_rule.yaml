@@ -1,0 +1,4 @@
+name: "birads_extractor"
+type: "regex"
+pattern: "\\bBIRADS\\s*(?:0|1|2|3|4|4A|4B|4C|5|6|Not\\s*angegeben|nicht\\s*angegeben)\\b"
+accuracy: 0.95

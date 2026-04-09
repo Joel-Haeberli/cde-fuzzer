@@ -1,0 +1,4 @@
+name: "grade_extractor"
+type: "regex"
+pattern: "\\bGrad\\s*(?:1|2|3|I|II|III|G[1-3]|G1|G2|G3)\\b"
+accuracy: 0.90

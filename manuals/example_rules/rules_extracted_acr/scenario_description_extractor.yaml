@@ -1,0 +1,4 @@
+name: "scenario_description_extractor"
+type: "llm"
+prompt: "Extract the clinical scenario description from the radiology report text. Focus on the patient presentation, suspected condition, and imaging context."
+accuracy: 0.85

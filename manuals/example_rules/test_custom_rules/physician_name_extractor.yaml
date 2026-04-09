@@ -1,0 +1,4 @@
+name: "physician_name_extractor"
+type: "regex"
+pattern: "Dr [A-Z][a-z]+ [A-Z][a-z]+"
+accuracy: 0.88

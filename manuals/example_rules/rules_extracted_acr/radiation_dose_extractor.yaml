@@ -1,0 +1,4 @@
+name: "radiation_dose_extractor"
+type: "regex"
+pattern: "[0-9]+-[0-9]+ mSv"
+accuracy: 0.90

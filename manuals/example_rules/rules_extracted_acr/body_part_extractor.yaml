@@ -1,0 +1,4 @@
+name: "body_part_extractor"
+type: "regex"
+pattern: "(CT|MRI|US|Radiography) (head|chest|abdomen|pelvis|neck|spine|skull|face|maxillofacial|orbit|whole body|scrotal|breast|axilla)"
+accuracy: 0.92

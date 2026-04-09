@@ -1,0 +1,4 @@
+name: "biopsy_type_extractor"
+type: "regex"
+pattern: "\\b(?:Vakuumstanzbiopsie|Stanzbiopsie|Feinnadelpunktion|Nadelbiopsie|MIBB|MRI-gezielte\\s*Biopsie)\\b"
+accuracy: 0.90

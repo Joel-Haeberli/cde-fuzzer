@@ -1,0 +1,4 @@
+name: "llm_diagnosis_extractor"
+type: "llm"
+prompt: "Extract any mention of carcinoma or cancer diagnosis from the text. If no diagnosis information is present, respond with 'no data'."
+accuracy: 0.85
