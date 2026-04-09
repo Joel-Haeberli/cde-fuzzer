@@ -64,11 +64,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("CDE:      %s\n", result.CDEID)
-	fmt.Printf("Answer:   %s\n", result.Answer)
-	fmt.Printf("Accuracy: %.2f\n", result.Accuracy)
-	for _, t := range result.Traces {
-		fmt.Printf("  Rule: %s | Match: %q [%d:%d] | Accuracy: %.2f\n",
-			t.RuleName, t.Match.Value, t.Match.Start, t.Match.End, t.Accuracy)
+	// New output format: show only rule matches
+	if len(result.Traces) == 0 {
+		fmt.Println("No matches found.")
+	} else {
+		for _, t := range result.Traces {
+			fmt.Printf("Rule: %s\n", t.RuleName)
+			fmt.Printf("  Match: %q\n", t.Match.Value)
+			fmt.Printf("  Position: %d-%d\n", t.Match.Start, t.Match.End)
+			fmt.Printf("  Accuracy: %.2f\n", t.Accuracy)
+			fmt.Println()
+		}
 	}
 }

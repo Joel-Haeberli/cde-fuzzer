@@ -218,6 +218,25 @@ export LLM_TEMPERATURE="0.3"
 - Check API rate limits and quota if you encounter errors
 - Verify your API key has the necessary permissions
 
+## Output Format
+
+The extractor outputs rule matches in a structured format:
+
+**When matches are found:**
+```
+Rule: [rule_name]
+  Match: "[matched_text]"
+  Position: [start_position]-[end_position]
+  Accuracy: [accuracy_score]
+
+[Additional rules...]
+```
+
+**When no matches are found:**
+```
+No matches found.
+```
+
 ## Examples
 
 ### Example 1: Extract Patient Age
@@ -235,6 +254,14 @@ accuracy: 0.95
 ./cde-extractor-linux -file patient_report.txt -rules ./rules/
 ```
 
+**Output:**
+```
+Rule: age_extractor
+  Match: "45 years old"
+  Position: 11-23
+  Accuracy: 0.95
+```
+
 ### Example 2: Extract Diagnosis with LLM
 
 **Rule (`diagnosis_rule.yaml`):**
@@ -247,7 +274,15 @@ accuracy: 0.90
 
 **Command:**
 ```bash
-./cde-extractor-linux -file radiology_report.txt -rules ./rules/
+./cde-extractor-linux -file radiology_report.txt -rules ./rules/ --llm
+```
+
+**Output (with LLM enabled):**
+```
+Rule: diagnosis_extractor
+  Match: "invasive ductal carcinoma"
+  Position: 45-68
+  Accuracy: 0.90
 ```
 
 ### Example 3: Batch Processing
