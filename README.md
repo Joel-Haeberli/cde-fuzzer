@@ -2,7 +2,7 @@
 
 **Fuzzy algorithms for medical data extraction and synthetic report generation**
 
-The tool is still under development. Verify your results and don't use the tool blindly. Do not hesitate filing an Issue if you find bugs or encounter problems.
+The tool is still under development. Verify your results and don't use the tool blindly. Do not hesitate filing an issue if you find bugs or encounter problems.
 
 ## Quick Start
 

@@ -64,3 +64,10 @@ full-pipeline:
 	./bin/derive-rules -data data/ -output derived_rules/ -recursive
 	./bin/generate-synthetic -count 100 -variability 1.0
 	@echo "Full pipeline completed"
+
+release:
+	@echo "Enter version number (e.g., v1.0.0):"
+	@read -p "Version: " VERSION && \
+	git tag $$VERSION && \
+	git push origin $$VERSION && \
+	echo "Released version $$VERSION"
