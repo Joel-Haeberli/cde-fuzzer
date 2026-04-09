@@ -28,7 +28,8 @@ func main() {
 	rulesDir := os.Getenv("RULES_DIR")
 	if rulesDir != "" {
 		var err error
-		rules, err = core.LoadRulesFromDirectory(rulesDir)
+		// Enable LLM rules by default in server mode
+		rules, err = core.LoadRulesFromDirectory(rulesDir, true)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error loading rules: %v\n", err)
 			os.Exit(1)

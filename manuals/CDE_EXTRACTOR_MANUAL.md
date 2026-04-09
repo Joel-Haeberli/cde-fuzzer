@@ -27,13 +27,15 @@ make build-linux  # or build-mac, build-windows
 ### Command Line Options
 
 ```
-Usage: cde-extractor -file <path> -rules <rules-dir>
+Usage: cde-extractor -file <path> -rules <rules-dir> [-llm]
 
 Flags:
   -file string
         path to text file to extract from
   -rules string
         path to directory containing rule YAML files
+  -llm
+        enable LLM rules (requires LLM_API_URL and LLM_API_KEY env vars)
 ```
 
 ## Rule Configuration
@@ -68,6 +70,34 @@ type: "llm"
 prompt: "Extract the diagnosis or main findings from the text. Look for sections headed by 'Diagnose', 'Befund', 'Findings', or 'Diagnosis' and extract the relevant clinical information."
 accuracy: 0.90
 ```
+
+**LLM Client Configuration:**
+
+By default, LLM rules are **disabled** for safety and performance. To use LLM rules:
+
+1. **Enable LLM rules** with the `--llm` flag:
+   ```bash
+   ./cde-extractor-linux -file input.txt -rules ./rules/ --llm
+   ```
+
+2. **Configure the LLM API** using environment variables:
+   ```bash
+   export LLM_API_URL="https://api.mistral.ai/v1/completions"
+   export LLM_API_KEY="your-mistral-api-key-here"
+   export LLM_MODEL="mistral-tiny"  # Optional, default is mistral-tiny
+   export LLM_TEMPERATURE="0.7"     # Optional, default is 0.7
+   export LLM_TIMEOUT="30"          # Optional, default is 30 seconds
+   ```
+
+**Important Notes:**
+- Without the `--llm` flag, LLM rules are skipped (with a warning message)
+- If `--llm` is used but environment variables are missing, the tool falls back to MockLLMClient
+- Server mode enables LLM rules by default
+
+**Supported LLM Providers:**
+- Mistral AI (default)
+- OpenAI
+- Any API with OpenAI-compatible completion endpoint
 
 **Prompt Tips:**
 - Be specific about what to extract
@@ -160,6 +190,33 @@ Rules are applied in sequence, and the best match is selected based on accuracy 
 ### Custom Rules
 
 Create custom rules for your specific extraction needs by adding YAML files to your rules directory.
+
+### Remote LLM Client
+
+For production use, configure the RemoteLLMClient to connect to real LLM APIs:
+
+```bash
+# Set environment variables for Mistral AI
+export LLM_API_URL="https://api.mistral.ai/v1/completions"
+export LLM_API_KEY="your-mistral-api-key-here"
+
+# Run extraction with real LLM
+export LLM_MODEL="mistral-small"
+export LLM_TEMPERATURE="0.3"
+./cde-extractor-linux -file medical_report.txt -rules ./llm_rules/ --llm
+```
+
+**Environment Variables:**
+- `LLM_API_URL`: API endpoint URL (required)
+- `LLM_API_KEY`: API authentication key (required)
+- `LLM_MODEL`: Model name (default: "gpt-3.5-turbo")
+- `LLM_TEMPERATURE`: Response randomness (default: 0.7)
+- `LLM_TIMEOUT`: Request timeout in seconds (default: 30)
+
+**Troubleshooting:**
+- If environment variables are not set, the tool automatically falls back to MockLLMClient
+- Check API rate limits and quota if you encounter errors
+- Verify your API key has the necessary permissions
 
 ## Examples
 

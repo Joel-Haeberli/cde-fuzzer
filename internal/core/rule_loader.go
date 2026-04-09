@@ -22,7 +22,7 @@ type RuleConfig struct {
 }
 
 // LoadRulesFromDirectory loads all rule configurations from YAML files in the specified directory.
-func LoadRulesFromDirectory(dirPath string) ([]Rule, error) {
+func LoadRulesFromDirectory(dirPath string, enableLLM bool) ([]Rule, error) {
 	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read directory: %v", err)
@@ -43,6 +43,12 @@ func LoadRulesFromDirectory(dirPath string) ([]Rule, error) {
 		var ruleConfig RuleConfig
 		if err := yaml.Unmarshal(data, &ruleConfig); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal YAML in %s: %v", filePath, err)
+		}
+
+		// Skip LLM rules if LLM is not enabled
+		if ruleConfig.Type == "llm" && !enableLLM {
+			fmt.Printf("⚠️  Skipping LLM rule %s (LLM not enabled, use --llm flag)\n", ruleConfig.Name)
+			continue
 		}
 
 		rule, err := createRuleFromConfig(ruleConfig)
@@ -78,8 +84,20 @@ func createRuleFromConfig(config RuleConfig) (Rule, error) {
 		if config.Prompt == "" {
 			return nil, fmt.Errorf("prompt is required for llm rule")
 		}
-		// For now, we'll use a simple mock client. In production, this would be injected.
-		return NewLLMRule(config.Name, config.Prompt, config.Accuracy, &MockLLMClient{}), nil
+		// Try to use RemoteLLMClient if environment variables are set, otherwise fall back to MockLLMClient
+		var llmClient LLMClient
+		if os.Getenv("LLM_API_URL") != "" && os.Getenv("LLM_API_KEY") != "" {
+			remoteClient, err := NewRemoteLLMClient()
+			if err != nil {
+				fmt.Printf("Warning: Failed to create RemoteLLMClient: %v, falling back to MockLLMClient\n", err)
+				llmClient = &MockLLMClient{}
+			} else {
+				llmClient = remoteClient
+			}
+		} else {
+			llmClient = &MockLLMClient{}
+		}
+		return NewLLMRule(config.Name, config.Prompt, config.Accuracy, llmClient), nil
 
 	default:
 		return nil, fmt.Errorf("unknown rule type: %s", config.Type)

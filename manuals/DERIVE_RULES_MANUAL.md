@@ -106,6 +106,8 @@ prompt: "Extract the patient's age from the text. Look for numbers followed by a
 accuracy: 0.90
 ```
 
+**Note:** LLM rules use a mock client by default. To use real LLM APIs, set the `LLM_API_URL` and `LLM_API_KEY` environment variables. See the CDE Extractor Manual for details.
+
 ### File Naming Convention
 
 - **Base name**: Derived from the CDE type (e.g., `age_extractor`)

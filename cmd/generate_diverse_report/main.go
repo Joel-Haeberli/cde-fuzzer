@@ -22,8 +22,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Load rules
-	_, err := core.LoadRulesFromDirectory(*rulesDir)
+	// Load rules (enable LLM by default for diverse report generation)
+	_, err := core.LoadRulesFromDirectory(*rulesDir, true)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error loading rules: %v\n", err)
 		os.Exit(1)

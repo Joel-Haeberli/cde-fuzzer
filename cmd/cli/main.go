@@ -13,6 +13,7 @@ import (
 func main() {
 	filePath := flag.String("file", "", "path to text file to extract from")
 	rulesDir := flag.String("rules", "", "path to directory containing rule YAML files")
+	useLLM := flag.Bool("llm", false, "enable LLM rules (requires LLM_API_URL and LLM_API_KEY env vars)")
 	flag.Parse()
 
 	if *filePath == "" {
@@ -31,7 +32,7 @@ func main() {
 	// Load rules from directory
 	var rules []core.Rule
 	if *rulesDir != "" {
-		rules, err = core.LoadRulesFromDirectory(*rulesDir)
+		rules, err = core.LoadRulesFromDirectory(*rulesDir, *useLLM)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error loading rules: %v\n", err)
 			os.Exit(1)
